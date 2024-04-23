@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyszukiwarka</title>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap"
+    rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/6ee12b0358.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="currency-card">
+        <h1 class="currency-card__title">Wymiana waluty</h1>
+        <p class="currency-card__text">Sprawdź aktualne kursy wybranych walut</p>
+
+        <div class="currency-card__body">
+
+            <div class="currency-card__body-left">
+                <input type="number" class="currency-card__amount-first" value="1">
+                <select id="currency-first">
+                    <option value="PLN">PLN</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="CHF">CHF</option>
+                    <option value="CAD">CAD</option>
+                </select>
+            </div>
+            
+
+            <button class="currency-card__btn"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+            
+            <div class="currency-card__body-right">
+                <input type="number" class="currency-card__amount-second" disabled>
+                <select id="currency-second">
+                    <option value="PLN">PLN</option>
+                    <option value="USD" selected>USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="CHF">CHF</option>
+                    <option value="CAD">CAD</option>
+                </select>
+            </div>
+        </div>
+        <p class="currency-card__result"><!--1 EUR = 4.45 PLN--></p>
+        <button class="currency-card__chart-btn"><i class="fa-solid fa-chart-line"></i></button>
+        
+        
+    </div>
+
+    <div class="rates">
+        <div class="rates__body">
+            <div id="rates__chart">
+            </div>
+            <div class="rates__btns">
+                <button class="rates__btn rates__class-btn" data-number="7">Tydzień</button>
+                <button class="rates__btn rates__class-btn" data-number="30">Miesiąc</button>
+                <button class="rates__btn rates__class-btn" data-number="90">3 miesiące</button>
+                <button class="rates__btn rates__class-btn" data-number="365">Rok</button>
+                <button class="rates__period-btn rates__class-btn">Zakres</button>
+            </div>
+           
+    
+            <div class="rates__date">
+                <div class="rates__date-body">
+                    <h2 class="rates__date-title">Zarządzaj datą</h2>
+                    <label for="start-date">Wprowadź datę początkową</label>
+                    <input type="date" name="start-date" id="start-date">
+                    <label for="end-date">Wprowadź datę końcową</label>
+                    <input type="date" name="end-date" id="end-date">
+                    <p class="rates__date-error">Wprowadź wszystkie daty</p>
+                    <div class="rates__date-btns">
+                        <button class="rates__date-btn rates__date-btn--save">Zatwierdź</button>
+                        <button class="rates__date-btn rates__date-btn--cancel">Anuluj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rates__xmark">
+            <div class="rates__line"></div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="/js/rates.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

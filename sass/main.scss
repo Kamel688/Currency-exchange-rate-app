@@ -1,0 +1,387 @@
+@use "_mixins.scss" as *;
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2em;
+	min-height: 100vh;
+	font-family: "Montserrat", sans-serif;
+	background-image: linear-gradient(315deg, #045de9 0%, #4faaff 74%);
+	//background-color: #306844;
+	//background-image: linear-gradient(314deg, #306844 0%, #2c4c3b 74%);
+	background: radial-gradient(#224646, #182828) repeat;
+	background: radial-gradient(#397575, #2a4646) repeat;
+	background: radial-gradient(#397575, #1e3131) repeat;
+
+	//background-image: linear-gradient(315deg, rgba(146,111,52,0.8), rgba(223,190,106,0.8));
+	//background-image: radial-gradient( circle farthest-corner at 22.4% 21.7%, rgba(4,189,228,1) 0%, rgba(2,83,185,1) 100.2% );
+	//background-image: linear-gradient(to right, #00b4db, #0083b0);
+}
+
+.currency-card {
+	position: relative;
+	padding: 4em;
+	width: 100%;
+	max-width: 750px;
+	background-color: #f8f8f8;
+	text-align: center;
+	border-radius: 8px;
+	box-shadow: 3px 3px 10px #292929;
+
+	&__hide{
+		display: none;
+	}
+	&__title {
+		margin-bottom: 0.5em;
+		font-size: 2.8rem;
+	}
+	&__text {
+		margin-bottom: 2em;
+		font-size: 2.2rem;
+		font-weight: 200;
+	}
+
+	&__body {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	&__body-left,
+	&__body-right {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	input {
+		margin-bottom: 0.3em;
+		width: 100%;
+		font-size: 4rem;
+	}
+	select {
+		margin: 0.5em 0;
+		font-size: 3rem;
+		cursor: pointer;
+	}
+
+	option {
+		color: #333;
+	}
+
+	input,
+	select {
+		text-align: center;
+		border: none;
+		background: none;
+		&:focus {
+			outline: none;
+			color: #52b5b5;
+		}
+	}
+	&__btn {
+		margin: 0.5em;
+		padding: 0.7em 3.4em;
+		align-self: flex-end;
+		border: none;
+		border-radius: 5em;
+		background-color: #4faaff;
+		color: #ffffff;
+		background: radial-gradient(#52b5b5, #568d8d) repeat;
+		font-size: 1.6rem;
+		cursor: pointer;
+	}
+
+	&__chart-btn {
+		position: absolute;
+		top: 25px;
+		right: 25px;
+		font-size: 3.5rem;
+		background: none;
+		border: none;
+		color: #464646;
+		cursor: pointer;
+		//color: #4faaff;
+	}
+	&__result {
+		margin-top: 1.2em;
+		font-size: 2.4rem;
+		color: red;
+	}
+	&__result-correct{
+		color: black;
+	}
+	&__show-error{
+		display: block;
+	}
+}
+
+#rates__chart {
+	width: 100%;
+	height: 420px;
+	max-width: 750px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 3px 3px 10px #292929;
+	// margin: 35px auto;
+}
+.apexcharts-toolbar .apexcharts-menu-icon {
+	width: 54px !important;
+	height: 110px !important;
+
+	svg{
+		width: 42px;
+		height: 42px;
+	}
+}
+
+.rates {
+	display: none;
+	position: absolute;
+	padding: 4em;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	&__body{
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		max-width: 750px;
+		overflow: hidden
+	}
+	&__btns {
+		display: flex;
+		justify-content: center;
+		position: absolute;
+		bottom: 15px;
+		min-width: 750px;
+	}
+	&__btn {
+		@include btnStyles();
+		&::before, &::after{
+			@include btn-animation();
+		}
+		&::before{
+			clip-path: polygon(0 0, 0 0, 0 0);
+		}
+		&:hover::before{
+			clip-path: polygon(0 0, 0 102%, 102% 0);
+		}
+
+		&::after{
+			clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+		}
+
+		&:hover::after{
+			clip-path: polygon(100% 0%, 0% 100%, 100% 100%);
+		}
+		&:hover{
+			color: #ffffff;
+		}
+	}
+	&__period-btn{
+		@include btnStyles();
+		&::before, &::after{
+			@include btn-animation();
+		}
+		&::before{
+			clip-path: polygon(0 0, 0 0, 0 0);
+		}
+		&:hover::before{
+			clip-path: polygon(0 0, 0 100%, 100% 0);
+		}
+		&::after{
+			clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+		}
+
+		&:hover::after{
+			clip-path: polygon(100% 0%, 0% 100%, 100% 100%);
+		}
+		&:hover{
+			color: #ffffff;
+		}
+	}
+	&__btn-active{
+		background-color: #6bdada;
+		color: #fff;
+	}
+    &__btn-resize{
+        animation: resize 0.4s linear;
+    }
+	&__class-btn{
+		&:hover{
+			transform: scale(0.95);
+		}
+	}
+	&__xmark {
+		position: absolute;
+		top: 40px;
+		right: 30px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		z-index: 2;
+	}
+	&__line {
+		position: relative;
+		width: 43px;
+		height: 4px;
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #ffffff;
+			transform: rotate(135deg);
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #ffffff;
+			transform: rotate(-135deg);
+		}
+	}
+	&__show {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&__date {
+		position: absolute;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 420px;
+		max-width: 750px;
+		background-color: rgba(0, 0, 0, 0.5);
+		border-radius: 8px;
+		box-shadow: 3px 3px 10px #292929;
+	}
+    &__date-show{
+        display: flex;
+		z-index: 2;
+    }
+	&__date-body {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: absolute;
+		padding: 2em;
+		min-width: 400px;
+		border-radius: 8px;
+		background-color: white;
+		font-size: 1.6rem;
+		box-shadow: 3px 3px 10px #292929;
+	}
+
+	&__date-title {
+		margin-bottom: 0.8em;
+		font-size: 1.3em;
+		text-transform: uppercase;
+	}
+	&__date-error{
+		font-size: 1.5rem;
+		visibility: hidden;
+		color: red;
+	}
+	&__date-error-show{
+		visibility: visible;
+	}
+    &__date-btns{
+        margin-top: 1.2em;
+    }
+	&__date-btn {
+		position: relative;
+		padding: 0.8em 1.6em;
+		margin: 0 1em;
+		border-radius: 8px;
+		border: 2px solid 	#ffffff;
+		background: none;
+		color: #ffffff;
+		font-size: 1.4rem;
+		text-transform: uppercase;
+		font-weight: bold;
+        cursor: pointer;
+		z-index: 1;
+		overflow: hidden;
+		transition: color 0.5s, border 0.5s;
+		&::before, &::after{
+			@include btn-animation();
+		}
+		&::before{
+			clip-path: polygon(0 0, 0 0, 0 0);
+			background-color: #ffffff;
+		}
+		&:hover::before{
+			clip-path: polygon(0 0, 0 102%, 102% 0);
+		}
+
+		&::after{
+			clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+			background-color: #ffffff;
+		}
+
+		&:hover::after{
+			clip-path: polygon(100% 0%, 0% 100%, 100% 100%);
+		}
+		&:hover{
+			color: black;
+		}
+	}
+    &__date-btn--save{
+        background-color: mediumseagreen;
+		&:hover{
+			border: 2px solid mediumseagreen;
+		}
+    }
+    &__date-btn--cancel{
+        background-color:tomato;
+		&:hover{
+			border: 2px solid tomato;
+		}
+    }
+
+    input {
+		margin: 0.8em 0;
+		padding: 0.7em 1em;
+		width: 100%;
+		border: 1px solid black;
+		font-size: 1.5rem;
+		border-radius: 8px;
+	}
+	label {
+        font-size: 1.6rem;
+		margin: 0.6em 0;
+	}
+   
+}
+
+@keyframes resize {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(0.9);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
